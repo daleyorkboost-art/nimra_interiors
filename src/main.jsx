@@ -6,7 +6,14 @@ import {blinds, findBlind} from './blinds';
 import './styles.css';
 
 const A = '/assets/';
-const nav = [['Home', '/'], ['Products', '/products'], ['Trade', '/trade'], ['About Us', '/about'], ['Contact', '/contact']];
+const nav = [
+  ['Home', '/'],
+  ['Products', '/products'],
+  ['Trade', '/trade'],
+  ['Gallery', 'https://www.instagram.com/nimrainteriordesigns/', {target: '_blank', rel: 'noreferrer'}],
+  ['About Us', '/about'],
+  ['Contact', '/contact'],
+];
 const productGroups = [
   {label: 'Fabrics', to: '/fabrics', copy: 'Drapery, upholstery and decorative textiles', items: collections},
   {label: 'Blinds', to: '/blinds', copy: 'Tailored systems for light and privacy', items: blinds},
@@ -33,15 +40,15 @@ function Header() {
   }, [open]);
   return <><div className="consultation-bar"><div className="page-width"><span><Sparkles /> Thoughtful material guidance, from first sample to final installation.</span><Link to="/contact">Book a consultation <ArrowRight /></Link></div></div><header className="site-header"><div className="header-inner">
     <Link to="/" className="brand" aria-label="Nimra Interiors home"><img src={`${A}nimra-logo-4k.jpeg`} alt="Nimra Interiors" /></Link>
-    <nav className="desktop-nav" aria-label="Main navigation">{nav.map(([label, to]) => <div className="nav-item" key={label}><Link to={to}>{label}{label === 'Products' && <ChevronDown />}</Link>{label === 'Products' && <div className="products-mega">{productGroups.map((group) => <div className="mega-group" key={group.label}><Link to={group.to} className="mega-heading"><span>{group.label}</span><small>{group.copy}</small></Link>{group.items.map((item) => <Link key={item.slug} to={`${group.to}/${item.slug}`}><span>{item.title}</span><ArrowRight /></Link>)}</div>)}</div>}</div>)}</nav>
+    <nav className="desktop-nav" aria-label="Main navigation">{nav.map(([label, to, linkProps]) => <div className="nav-item" key={label}><Link to={to} {...linkProps}>{label}{label === 'Products' && <ChevronDown />}</Link>{label === 'Products' && <div className="products-mega">{productGroups.map((group) => <div className="mega-group" key={group.label}><Link to={group.to} className="mega-heading"><span>{group.label}</span><small>{group.copy}</small></Link>{group.items.map((item) => <Link key={item.slug} to={`${group.to}/${item.slug}`}><span>{item.title}</span><ArrowRight /></Link>)}</div>)}</div>}</div>)}</nav>
     <Link to="/contact" className="header-enquire">Book a visit <ArrowRight /></Link>
     <button className="menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? 'Close menu' : 'Open menu'}>{open ? <X /> : <Menu />}</button>
-  </div><nav id="mobile-nav" className={`mobile-nav ${open ? 'open' : ''}`} aria-hidden={!open}>{nav.map(([label, to]) => <div className="mobile-nav-group" key={label}><div className="mobile-nav-row"><Link to={to} onClick={() => setOpen(false)}>{label}</Link>{label === 'Products' ? <button onClick={() => setMobileSection(mobileSection === label ? null : label)} aria-expanded={mobileSection === label} aria-label="Toggle product categories"><ChevronDown /></button> : <ArrowRight />}</div>{label === 'Products' && <div className={`mobile-submenu ${mobileSection === label ? 'open' : ''}`}>{productGroups.map((group) => <div key={group.label}><Link className="mobile-group-title" to={group.to} onClick={() => setOpen(false)}>{group.label}</Link>{group.items.map((item) => <Link key={item.slug} to={`${group.to}/${item.slug}`} onClick={() => setOpen(false)}>{item.title}</Link>)}</div>)}</div>}</div>)}</nav></header></>;
+  </div><nav id="mobile-nav" className={`mobile-nav ${open ? 'open' : ''}`} aria-hidden={!open}>{nav.map(([label, to, linkProps]) => <div className="mobile-nav-group" key={label}><div className="mobile-nav-row"><Link to={to} {...linkProps} onClick={() => setOpen(false)}>{label}</Link>{label === 'Products' ? <button onClick={() => setMobileSection(mobileSection === label ? null : label)} aria-expanded={mobileSection === label} aria-label="Toggle product categories"><ChevronDown /></button> : <ArrowRight />}</div>{label === 'Products' && <div className={`mobile-submenu ${mobileSection === label ? 'open' : ''}`}>{productGroups.map((group) => <div key={group.label}><Link className="mobile-group-title" to={group.to} onClick={() => setOpen(false)}>{group.label}</Link>{group.items.map((item) => <Link key={item.slug} to={`${group.to}/${item.slug}`} onClick={() => setOpen(false)}>{item.title}</Link>)}</div>)}</div>}</div>)}</nav></header></>;
 }
 
 function Footer() {
   return <footer className="site-footer"><div className="footer-brand"><div className="footer-logo"><img src={`${A}nimra-logo-4k.jpeg`} alt="Nimra Interiors" /></div><p>Fabrics, blinds and considered details for beautifully finished interiors.</p></div>
-    <div className="footer-nav"><span>Explore</span>{nav.slice(1).map(([label, to]) => <Link key={label} to={to}>{label}</Link>)}</div>
+    <div className="footer-nav"><span>Explore</span>{nav.slice(1).map(([label, to, linkProps]) => <Link key={label} to={to} {...linkProps}>{label}</Link>)}</div>
     <div className="footer-nav"><span>Collections</span>{collections.slice(0, 4).map((item) => <Link key={item.slug} to={`/fabrics/${item.slug}`}>{item.title}</Link>)}</div>
     <div className="footer-nav"><span>Blinds</span>{blinds.map((item) => <Link key={item.slug} to={`/blinds/${item.slug}`}>{item.title}</Link>)}</div>
     <div className="footer-base"><small>© {new Date().getFullYear()} Nimra Interiors</small><small>Fabrics · Blinds · Interior applications</small></div>
