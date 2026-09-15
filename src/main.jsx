@@ -6,6 +6,7 @@ import {blinds, findBlind} from './blinds';
 import './styles.css';
 
 const A = '/assets/';
+const ENQUIRY_ENDPOINT = import.meta.env.VITE_ENQUIRY_ENDPOINT || 'https://formsubmit.co/ajax/nimrainteriors@gmail.com';
 const nav = [
   ['Home', '/'],
   ['Products', '/products'],
@@ -38,7 +39,7 @@ function Header() {
     addEventListener('keydown', close);
     return () => { document.body.classList.remove('menu-open'); removeEventListener('keydown', close); };
   }, [open]);
-  return <><div className="consultation-bar"><div className="page-width"><span><Sparkles /> Thoughtful material guidance, from first sample to final installation.</span><Link to="/contact">Book a consultation <ArrowRight /></Link></div></div><header className="site-header"><div className="header-inner">
+  return <><div className="consultation-bar"><div className="page-width"><span><Sparkles /> Exceptional materials, thoughtfully curated from first sample to final installation.</span><Link to="/contact">Book a consultation <ArrowRight /></Link></div></div><header className="site-header"><div className="header-inner">
     <Link to="/" className="brand" aria-label="Nimra Interiors home"><img src={`${A}nimra-logo-4k.jpeg`} alt="Nimra Interiors" /></Link>
     <nav className="desktop-nav" aria-label="Main navigation">{nav.map(([label, to, linkProps]) => <div className="nav-item" key={label}><Link to={to} {...linkProps}>{label}{label === 'Products' && <ChevronDown />}</Link>{label === 'Products' && <div className="products-mega">{productGroups.map((group) => <div className="mega-group" key={group.label}><Link to={group.to} className="mega-heading"><span>{group.label}</span><small>{group.copy}</small></Link>{group.items.map((item) => <Link key={item.slug} to={`${group.to}/${item.slug}`}><span>{item.title}</span><ArrowRight /></Link>)}</div>)}</div>}</div>)}</nav>
     <Link to="/contact" className="header-enquire">Book a visit <ArrowRight /></Link>
@@ -61,8 +62,8 @@ function SectionHeading({label, title, copy, action}) {
 
 function Hero() {
   return <section className="home-hero"><div className="hero-image"><img src={`${A}hero.webp`} alt="Layered curtains in a contemporary interior" /></div><div className="hero-copy">
-    <span className="section-label">Nimra Interiors · Bespoke Furnishings</span><h1>Timeless interiors begin with the right materials.</h1><p>Premium furnishing fabrics and made-to-measure blinds, thoughtfully guided from first selection to final installation.</p>
-    <div className="hero-actions"><Link to="/products" className="button dark">Explore products <ArrowRight /></Link><Link to="/contact" className="text-link">Book a consultation <ArrowRight /></Link></div>
+    <span className="section-label">Nimra Interiors · Bespoke Window &amp; Textile Design</span><h1>Elevated interiors, crafted around your vision.</h1><p>Curated luxury fabrics, bespoke drapery and made-to-measure window treatments—thoughtfully selected and precisely crafted for exceptional spaces.</p>
+    <div className="hero-actions"><Link to="/products" className="button dark">Explore the collection <ArrowRight /></Link><Link to="/contact" className="text-link">Book a private consultation <ArrowRight /></Link></div>
   </div></section>;
 }
 
@@ -77,7 +78,7 @@ function CollectionCard({collection, index, basePath}) {
 function CollectionGrid({items = collections, basePath = 'fabrics', className = ''}) { return <div className={`collection-grid ${className}`}>{items.map((item, index) => <CollectionCard key={item.slug} collection={item} index={index} basePath={basePath} />)}</div>; }
 
 function Intro() {
-  return <section className="intro-section page-width"><SectionHeading label="A considered service" title="Guidance that brings every detail into focus." /><div className="intro-copy"><p>Explore fabrics, compare samples, refine your palette and plan made-to-measure window treatments with one attentive team.</p><Link to="/contact" className="text-link">Plan your consultation <ArrowRight /></Link></div></section>;
+  return <section className="intro-section page-width"><SectionHeading label="A bespoke experience" title="Thoughtful guidance, beautifully considered." /><div className="intro-copy"><p>Explore exceptional fabrics, refine your palette, and discover bespoke window treatments—personally curated to complement the character of your space.</p><Link to="/contact" className="text-link">Begin your bespoke journey <ArrowRight /></Link></div></section>;
 }
 
 function BlindsPreview() {
@@ -95,7 +96,7 @@ function ApplicationsStrip() {
 }
 
 function AboutPreview() {
-  return <section className="about-preview page-width"><img src={`${A}craft.webp`} alt="Fabric and furnishing material details" loading="lazy" /><div><span className="section-label">Our approach</span><h2>Material first. Chosen with the whole interior in mind.</h2><p>We look at colour, hand, light and application together, so the fabric feels connected to the room rather than added at the end.</p><Link to="/about" className="text-link">Read about Nimra <ArrowRight /></Link></div></section>;
+  return <section className="about-preview page-width"><img src={`${A}craft.webp`} alt="Fabric and furnishing material details" loading="lazy" /><div><span className="section-label">Our approach</span><h2>The art of choosing what belongs.</h2><p>We consider colour, texture, light, and proportion as one—curating exceptional fabrics that complement the architecture and elevate the entire interior with understated sophistication.</p><Link to="/about" className="text-link">Read about Nimra <ArrowRight /></Link></div></section>;
 }
 
 function CustomerJourney() {
@@ -113,11 +114,11 @@ function Testimonials() {
 }
 
 function EnquiryCTA() {
-  return <section className="enquiry-cta"><div className="page-width"><span className="section-label">Enquiries</span><h2>Looking for the right fabric or blind for your space?</h2><p>Share the application, palette and product direction you have in mind.</p><Link to="/contact" className="button light">Start an enquiry <ArrowRight /></Link></div></section>;
+  return <section className="enquiry-cta"><div className="page-width"><span className="section-label">Enquiries</span><h2>Begin with a vision.</h2><p>Tell us about your space, your palette, and the atmosphere you wish to create. We’ll guide you toward considered fabrics, shades, and finishes, curated exclusively for your interior.</p><Link to="/contact" className="button light">Start an enquiry <ArrowRight /></Link></div></section>;
 }
 
 function Home() {
-  return <><Hero /><Intro /><section className="collections-section page-width"><SectionHeading label="Fabric library" title="Texture, colour and character for every room." copy="Seven curated material families for drapery, upholstery and finishing details." action={<Link to="/products" className="text-link">View all products <ArrowRight /></Link>} /><CollectionGrid /></section><BlindsPreview /><FeaturedCollection /><CustomerJourney /><Testimonials /><AboutPreview /><EnquiryCTA /></>;
+  return <><Hero /><Intro /><section className="collections-section page-width"><SectionHeading label="Fabric library" title="A considered palette of texture, tone & character." copy="Exclusive material collections, selected to bring depth, dimension, and quiet sophistication to bespoke drapery, upholstery, and every finishing detail." action={<Link to="/products" className="text-link">View all products <ArrowRight /></Link>} /><CollectionGrid /></section><BlindsPreview /><FeaturedCollection /><CustomerJourney /><Testimonials /><AboutPreview /><EnquiryCTA /></>;
 }
 
 function PageHero({eyebrow, title, copy}) { return <section className="page-hero page-width"><span className="section-label">{eyebrow}</span><h1>{title}</h1><p>{copy}</p></section>; }
@@ -135,8 +136,8 @@ function BlindsPage() {
 }
 
 function TradePage() {
-  const benefits = [['Dedicated support', 'A single point of contact for samples, specifications and product queries.'], ['Curated sampling', 'Focused options prepared around your palette, performance needs and project brief.'], ['Project continuity', 'Responsive coordination from early specification through measurements and fulfilment.']];
-  return <><section className="trade-hero"><div className="page-width"><div><span className="section-label">Nimra Trade</span><h1>A material partner for design-led businesses.</h1><p>We collaborate with interior designers, architects, decorators, contractors and hospitality teams on considered residential and commercial spaces.</p><Link to="/contact" className="button dark">Start a trade conversation <ArrowRight /></Link></div><img src="/assets/trade-consultation.jpg" alt="Designer and client reviewing material samples" /></div></section><section className="trade-benefits page-width"><SectionHeading label="Built for collaboration" title="Responsive support around the way your studio works." /><div>{benefits.map(([title, copy], index) => <article key={title}><BriefcaseBusiness /><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section><section className="trade-steps"><div className="page-width"><span className="section-label">Trade enquiries</span><h2>Bring us your brief.</h2><p>Share your business type, project stage, application and approximate requirements. We’ll help identify the most relevant next step.</p><Link to="/contact" className="button light">Discuss a project <ArrowRight /></Link></div></section><Testimonials /></>;
+  const benefits = [['Dedicated expertise', 'Thoughtful, responsive support from first sample to final specification, with a dedicated point of contact throughout your project.'], ['Curated sampling', 'Focused options prepared around your palette, performance needs and project brief.'], ['Project continuity', 'Responsive coordination from early specification through measurements and fulfilment.']];
+  return <><section className="trade-hero"><div className="page-width"><div><span className="section-label">Nimra Trade</span><h1>Materials and expertise for exceptional interiors.</h1><p>From distinctive fabrics to tailored window treatments, NIMRA partners with leading design professionals to bring depth, refinement, and enduring character to thoughtfully conceived residential and hospitality spaces.</p><Link to="/contact" className="button dark">Start a trade conversation <ArrowRight /></Link></div><img src="/assets/trade-consultation.jpg" alt="Designer and client reviewing material samples" /></div></section><section className="trade-benefits page-width"><SectionHeading label="Built for collaboration" title="Responsive support around the way your studio works." /><div>{benefits.map(([title, copy], index) => <article key={title}><BriefcaseBusiness /><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section><section className="trade-steps"><div className="page-width"><span className="section-label">Trade enquiries</span><h2>Let’s begin with the vision.</h2><p>Tell us about your practice and the project you’re shaping. From material selection to tailored window treatments, we’ll provide considered recommendations suited to the character and requirements of your space.</p><Link to="/contact" className="button light">Discuss a project <ArrowRight /></Link></div></section><Testimonials /></>;
 }
 
 function CollectionPage({collection, type = 'Fabric', backPath = '/fabrics', backLabel = 'All fabrics'}) {
@@ -159,12 +160,36 @@ function ApplicationsPage() {
 }
 
 function AboutPage() {
-  return <><PageHero eyebrow="About Us" title="A considered approach to furnished interiors." copy="Nimra Interiors brings together distinctive fabrics, tailored blinds and personal guidance for spaces with lasting character." /><section className="about-page page-width"><img src={`${A}light.webp`} alt="Light passing through layered fabric" /><div><h2>Every choice begins with the room.</h2><p>We consider the visual and practical role of each fabric or blind: how it responds to light, how it feels at close range, and how naturally it works with the surrounding finishes.</p></div></section><EnquiryCTA /></>;
+  return <><PageHero eyebrow="About Us" title="A refined approach to beautifully considered interiors." copy="At NIMRA Interiors, every element is chosen with intention. From exquisite fabrics to tailored blinds and drapery, we curate materials and finishes that bring depth, elegance, and lasting character to every space." /><section className="about-page page-width"><img src={`${A}light.webp`} alt="Light passing through layered fabric" /><div><h2>Designed in harmony with the room.</h2><p>Every material is considered for more than its appearance. We look to light, texture, proportion, and finish to ensure each fabric or blind becomes a natural expression of the space—refined, cohesive, and enduring.</p></div></section><EnquiryCTA /></>;
 }
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
-  return <><PageHero eyebrow="Contact" title="Let’s shape your space together." copy="Share a few details about your room, application and preferred style, and we’ll help you find the right direction." /><section className="contact-page page-width"><div><span className="section-label">Enquiry form</span><h2>Start with a few details.</h2><p>Tell us about the room, window or furnishing application you are considering. Trade studios are welcome to include their business name and project stage.</p></div>{sent ? <div className="form-note" role="status"><h3>Your enquiry is ready.</h3><p>Thank you for sharing your project details. We look forward to helping you take the next step.</p><button className="text-link" onClick={() => setSent(false)}>Send another enquiry <ArrowRight /></button></div> : <form onSubmit={(event) => {event.preventDefault(); setSent(true);}}><label>Name<input name="name" autoComplete="name" required /></label><label>Email<input name="email" type="email" autoComplete="email" required /></label><label>Phone<input name="phone" type="tel" autoComplete="tel" /></label><label>Interested in<select name="collection" defaultValue=""><option value="">Select a product or service</option><option>Trade partnership</option><option>Product consultation</option><optgroup label="Fabrics">{collections.map((item) => <option key={item.slug}>{item.title}</option>)}</optgroup><optgroup label="Blinds">{blinds.map((item) => <option key={item.slug}>{item.title}</option>)}</optgroup></select></label><label className="wide">Project details<textarea name="message" rows="5" required /></label><button className="button dark" type="submit">Prepare enquiry <ArrowRight /></button></form>}</section></>;
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const submitEnquiry = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch(ENQUIRY_ENDPOINT, {
+        method: 'POST',
+        body: new FormData(event.currentTarget),
+        headers: {Accept: 'application/json'},
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.success === false || result.success === 'false') throw new Error(result.message || 'Unable to send enquiry');
+      setSent(true);
+    } catch {
+      setError('We could not send your enquiry. Please try again in a moment.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return <><PageHero eyebrow="Contact" title="Begin your space with intention." copy="Share your vision with us. From the architecture and natural light to the finest details, we’ll help curate fabrics, window treatments, and finishes that bring your interior together with quiet sophistication." /><section className="contact-page page-width"><div><span className="section-label">Enquiry</span><h2>Every considered interior begins with a conversation.</h2><p>Share a little about your space, its character, and what you’re looking to create. Trade studios are invited to include their business details and project stage for a more tailored consultation.</p></div>{sent ? <div className="form-note" role="status"><h3>Your enquiry has been sent.</h3><p>Thank you for sharing your project details. We look forward to helping you take the next step.</p><button className="text-link" onClick={() => setSent(false)}>Send another enquiry <ArrowRight /></button></div> : <form onSubmit={submitEnquiry}><input type="hidden" name="_subject" value="New website enquiry — Nimra Interiors" /><input type="hidden" name="_template" value="table" /><input className="form-honeypot" type="text" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" /><label>Name<input name="name" autoComplete="name" required /></label><label>Email<input name="email" type="email" autoComplete="email" required /></label><label>Phone<input name="phone" type="tel" autoComplete="tel" /></label><label>Interested in<select name="collection" defaultValue=""><option value="">Select a product or service</option><option>Trade partnership</option><option>Product consultation</option><optgroup label="Fabrics">{collections.map((item) => <option key={item.slug}>{item.title}</option>)}</optgroup><optgroup label="Blinds">{blinds.map((item) => <option key={item.slug}>{item.title}</option>)}</optgroup></select></label><label className="wide">Project details<textarea name="message" rows="5" required /></label>{error && <p className="form-error wide" role="alert">{error}</p>}<button className="button dark" type="submit" disabled={submitting}>{submitting ? 'Sending…' : 'Send enquiry'} <ArrowRight /></button></form>}</section></>;
 }
 
 function NotFound() { return <section className="not-found page-width"><span className="section-label">404</span><h1>Page not found.</h1><Link to="/" className="button dark">Return home <ArrowRight /></Link></section>; }
